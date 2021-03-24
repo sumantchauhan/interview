@@ -1,0 +1,277 @@
+React Lifecycle methods
+
+Each component in React has a lifecycle that goes through three main phases Mounting, Updating, and Unmounting.
+
+The react lifecycle method is used in the React class component. 
+It helps us in creating our state and mutating them.
+
+
+Mounting:
+
+The mounting means to put elements into the DOM. React uses virtual DOM to put all the elements 
+into the memory. It has four built-in methods to mount a component namely
+
+1).constructor()
+2).getDerivedStateFromProps()
+3).render()
+4).componentDidMount()
+
+constructor():
+
+constructor() method is called when the component is initiated and it’s the best place to initialize 
+our state. The constructor method takes props as an argument and starts by calling super(props) 
+before anything else.
+
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      name: 'Constructor Method'
+    }
+  }
+  render() {
+    return (
+      <div>
+       <p> This is a {this.state.name}</p>
+      </div>
+    )
+  }
+}
+
+
+static getDerivedStateFromProps(props, state):
+The getDerivedStateFromProps method is called right before rendering the element in our DOM. 
+It takes props and state as an argument and returns an object with changes to the state.
+
+getDerivedStateFromProps is invoked right before calling the render method, 
+both on the initial mount and on subsequent updates. 
+It should return an object to update the state, or null to update nothing.
+
+import React, { Component } from 'react'
+
+export class ChildComponent extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+          name: 'Constructor Method'
+        }
+      }
+
+    static getDerivedStateFromProps(props, state) {
+        return {name: props.nameFromParent} 
+      }
+    render() {
+        return (
+            <div>
+                This is a {this.state.name}
+            </div>
+        )
+    }
+}
+
+
+export default class getDerivedStateFromPropsMethod extends Component {
+   
+    render() {
+        return (
+            <div>
+                <ChildComponent nameFromParent="getDerivedStateFromProps Method"/>
+            </div>
+        )
+    }
+}
+
+
+we are changing our initial state of name inside the constructor method to props which we are 
+receiving in getDerivedStateFromProps. The following code will output This is a 
+getDerivedStateFromProps Method.
+
+
+
+render()
+This is the only compulsory method required by the React. This method is responsible to render our JSX to DOM
+
+
+
+
+componentDidMount()
+The most common and widely used lifecycle method is componentDidMount. 
+This method is called after the component is rendered. 
+You can also use this method to call external data from the API.
+
+
+import React, { Component } from 'react'
+
+export default class componentDidMountMethod extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      name: 'This name will change in 5 sec'
+    }
+  }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({name: "This is a componentDidMount Method"})
+    }, 5000)
+
+  }
+  render() {
+    return (
+      <div>
+       <p>{this.state.name}</p>
+      </div>
+    )
+  }
+}
+
+
+The above example will print This is a componentDidMount Method after 5 sec. 
+This proves that the method is called after the component is rendered.
+
+
+
+
+Updating:
+This is the second phase of the React lifecycle. A component is updated when there is a change in 
+state and props React basically has five built-in methods that are called while updating the components.
+
+1).getDerivedStateFromProps()
+2).shouldComponentUpdate()
+3).render()
+4).getSnapshotBeforeUpdate()
+5).componentDidUpdate()
+
+
+shouldComponentUpdate(nextProps, nextState)
+This lifecycle method is used when you want your state or props to update or not. 
+This method returns a boolean value that specifies whether rendering should be done or not. 
+The default value is true.
+
+
+shouldComponentUpdate() is invoked before rendering when new props or state are being received. 
+Defaults to true. 
+This method is not called for the initial render or when forceUpdate() is used.
+
+import React, { Component } from 'react'
+
+export default class shouldComponentUpdateMethod extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      name: 'shouldComponentUpdate Method'
+    }
+  }
+  shouldComponentUpdate() {
+    return false; //Change to true for state to update
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({name: "componentDidMount Method"})
+    }, 5000)
+  }
+  render() {
+    return (
+      <div>
+       <p>This is a {this.state.name}</p>
+      </div>
+    )
+  }
+}
+
+
+
+
+
+getSnapshotBeforeUpdate()
+This method is called right before updating the DOM. It has access to props and state before the update. 
+Here you can check what was the value of your props or state before its update.
+
+Note: componentDidUpdate() should be included otherwise you will get an error.
+
+
+
+
+componentDidUpdate():
+The componentDidUpdate method is called after the component is updated in the DOM. 
+This is the best place in updating the DOM in response to the change of props and state.
+
+
+import React, { Component } from 'react'
+
+export default class componentDidUpdateMethod extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            name: 'from previous state'
+        }
+    }
+    componentDidMount(){
+        setTimeout(() => {
+            this.setState({name: "to current state"})
+          }, 5000)
+    }
+    componentDidUpdate(prevState){
+        if(prevState.name !== this.state.name){
+            document.getElementById('statechange').innerHTML = "Yes the state is changed"
+        }
+    }
+    render() {
+        return (
+            <div>
+                State was changed {this.state.name}
+                <p id="statechange"></p>
+            </div>
+        )
+    }
+}
+
+
+
+Unmounting
+The final or the end of the react lifecycle is Unmounting. 
+This is used when a component is removed from the DOM. 
+React has only one built-in method that gets called when a component is unmounted
+
+componentWillUnmount()
+If there are any cleanup actions like canceling API calls or clearing any caches in storage you 
+can perform that in the componentWillUnmount method. 
+You cannot use setState inside this method as the component will never be re-rendered.
+
+
+
+import React, { Component } from 'react'
+
+export default class componentWillUnmount extends Component {
+    constructor(props){
+        super(props)
+            this.state = {
+                show: true,
+            } 
+    }
+    render() {
+        return (
+            <>
+              <p>{this.state.show ? <Child/> : null}</p>
+               <button onClick={() => {this.setState({show: !this.state.show})}}>Click me to toggle</button>
+            </>
+        )
+    }
+}
+
+export class Child extends Component{
+    componentWillUnmount(){
+        alert('This will unmount')
+    }
+    render(){
+        return(
+            <>
+            I am a child component
+            </>
+        )
+    }
+}
+
+

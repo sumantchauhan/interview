@@ -1,0 +1,370 @@
+Closures:
+A closure gives you access to an outer function’s scope from an inner function.
+In JavaScript, closures are created every time a function is created, at function creation time.
+
+
+function init() {
+  var name = 'Mozilla'; // name is a local variable created by init
+  function displayName() { // displayName() is the inner function, a closure
+    alert(name); // use variable declared in the parent function
+  }
+  displayName();
+}
+init();
+
+
+init() creates a local variable called name and a function called displayName(). 
+The displayName() function is an inner function that is defined inside init() and is available only 
+within the body of the init() function. 
+Note that the displayName() function has no local variables of its own. 
+However, since inner functions have access to the variables of outer functions, 
+displayName() can access the variable name declared in the parent function, init().
+
+
+
+Inheritance and the prototype chain:
+The prototype is an object that is associated with every functions and objects by default in JavaScript, 
+where function's prototype property is accessible and modifiable and object's prototype property 
+(e.g..., attribute) is not visible.
+Every function includes prototype object by default.
+
+The prototype object is special type of enumerable object to which additional properties can be attached 
+to it which will be shared across all the instances of it's constructor function.
+
+function Student() {
+    this.name = 'John';
+    this.gender = 'Male';
+}
+
+var studObj1 = new Student();
+studObj1.age = 15;
+alert(studObj1.age); // 15
+
+var studObj2 = new Student();
+alert(studObj2.age); // undefined
+
+
+
+//Using prototype
+
+function Student() {
+    this.name = 'John';
+    this.gender = 'M';
+}
+
+Student.prototype.age = 15;
+
+var studObj1 = new Student();
+alert(studObj1.age); // 15
+
+var studObj2 = new Student();
+alert(studObj2.age); // 15
+
+In JavaScript, functions are able to have properties. All functions have a special property named 
+prototype. 
+Each object has a private property which holds a link to another object called its prototype. 
+That prototype object has a prototype of its own, and so on until an object is reached with null as its prototype. 
+By definition, null has no prototype, and acts as the final link in this prototype chain.
+Nearly all objects in JavaScript are instances of Object which sits on the top of a prototype chain.
+
+function Student() {
+    this.name = 'John';
+    this.gender = 'M';
+}
+
+var studObj = new Student();
+
+console.log(Student.prototype); // object
+console.log(studObj.prototype); // undefined
+console.log(studObj.__proto__); // object
+
+console.log(typeof Student.prototype); // object
+console.log(typeof studObj.__proto__); // object
+
+console.log(Student.prototype === studObj.__proto__ ); // true
+
+
+The prototype property is special type of enumerable object which cannot be iterate using for..in or foreach loop.
+
+
+Object's Prototype
+
+As mentioned before, object's prototype property is invisible. Use Object.getPrototypeOf(obj) method 
+instead of __proto__ to access prototype object.
+
+
+function Student() {
+    this.name = 'John';
+    this.gender = 'M';
+}
+
+var studObj = new Student();
+
+Student.prototype.sayHi= function(){
+    alert("Hi");
+};
+
+var studObj1 = new Student();
+var proto = Object.getPrototypeOf(studObj1);  // returns Student's prototype object
+            
+alert(proto.constructor); // returns Student function 
+
+
+Changing Prototype
+As mentioned above, each object's prototype is linked to function's prototype object. 
+If you change function's prototype then only new objects will be linked to changed prototype.
+All other existing objects will still link to old prototype of function. 
+The following example demonstrates this scenario.
+
+function Student() {
+    this.name = 'John';
+    this.gender = 'M';
+}
+
+Student.prototype.age = 15;
+
+var studObj1 = new Student();
+alert('studObj1.age = ' + studObj1.age); // 15
+
+var studObj2 = new Student();
+alert('studObj2.age = ' + studObj2.age); // 15
+
+Student.prototype = { age : 20 };
+
+var studObj3 = new Student();
+alert('studObj3.age = ' + studObj3.age); // 20
+
+alert('studObj1.age = ' + studObj1.age); // 15
+alert('studObj2.age = ' + studObj2.age); // 15
+
+
+
+Use of Prototype
+The prototype object is being used by JavaScript engine in two things, 
+1) to find properties and methods of an object 
+2) to implement inheritance in JavaScript.
+
+
+
+
+
+rorEach():
+Foreach takes a callback function and run that callback function on each element of array one by one.
+
+const array1 = ['a', 'b', 'c'];
+
+array1.forEach(element => console.log(element));
+
+// expected output: "a"
+// expected output: "b"
+// expected output: "c"
+
+
+
+
+
+filter():
+The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+
+const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+const result = words.filter(word => word.length > 6);
+
+console.log(result);
+// expected output: Array ["exuberant", "destruction", "present"]
+
+
+The main difference between forEach and filter is that forEach just loop over the array and executes 
+the callback but filter executes the callback and check its return value. 
+If the value is true element remains in the resulting array but if the return value is false the 
+element will be removed for the resulting array.
+
+
+Also take notice filter does not update the existing array it will return a new filtered array every time.
+
+
+
+map():
+The map() method creates a new array populated with the results of calling a provided 
+function on every element in the calling array.
+
+const array1 = [1, 4, 9, 16];
+
+// pass a function to map
+const map1 = array1.map(x => x * 2);
+
+console.log(map1);
+// expected output: Array [2, 8, 18, 32]
+
+
+
+
+every():
+The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
+
+const isBelowThreshold = (currentValue) => currentValue < 40;
+
+const array1 = [1, 30, 39, 29, 10, 13];
+
+console.log(array1.every(isBelowThreshold));
+// expected output: true
+
+
+concat():
+The concat() method is used to merge two or more arrays. 
+This method does not change the existing arrays, but instead returns a new array.
+
+
+const array1 = ['a', 'b', 'c'];
+const array2 = ['d', 'e', 'f'];
+const array3 = array1.concat(array2);
+
+console.log(array3);
+// expected output: Array ["a", "b", "c", "d", "e", "f"]
+
+
+fill():
+The fill() method changes all elements in an array to a static value, from a start index (default 0) to an end index (default array.length). 
+It returns the modified array.
+
+const array1 = [1, 2, 3, 4];
+
+// fill with 0 from position 2 until position 4
+console.log(array1.fill(0, 2, 4));
+// expected output: [1, 2, 0, 0]
+
+// fill with 5 from position 1
+console.log(array1.fill(5, 1));
+// expected output: [1, 5, 5, 5]
+
+console.log(array1.fill(6));
+// expected output: [6, 6, 6, 6]
+
+
+find():
+The find() method returns the value of the first element in the provided array that satisfies the provided testing function. 
+If no values satisfy the testing function, undefined is returned.
+
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find(element => element > 10);
+
+console.log(found);
+// expected output: 12
+
+
+findIndex():
+The findIndex() method returns the index of the first element in the array that satisfies the provided testing function. 
+Otherwise, it returns -1, indicating that no element passed the test.
+
+const array1 = [5, 12, 8, 130, 44];
+
+const isLargeNumber = (element) => element > 13;
+
+console.log(array1.findIndex(isLargeNumber));
+// expected output: 3
+
+
+
+includes():
+The includes() method determines whether an array includes a 
+certain value among its entries, returning true or false as appropriate.
+
+const array1 = [1, 2, 3];
+
+console.log(array1.includes(2));
+// expected output: true
+
+const pets = ['cat', 'dog', 'bat'];
+
+console.log(pets.includes('cat'));
+// expected output: true
+
+console.log(pets.includes('at'));
+// expected output: false
+
+shift():
+The shift() method removes the first element from an array and returns that removed element. 
+This method changes the length of the array.
+
+const array1 = [1, 2, 3];
+
+const firstElement = array1.shift();
+
+console.log(array1);
+// expected output: Array [2, 3]
+
+console.log(firstElement);
+// expected output: 1
+
+
+unshift():
+The unshift() method adds one or more elements to the beginning of an array and 
+returns the new length of the array.
+
+const array1 = [1, 2, 3];
+
+console.log(array1.unshift(4, 5));
+// expected output: 5
+
+console.log(array1);
+// expected output: Array [4, 5, 1, 2, 3]
+
+
+
+slice():
+The slice() method returns a shallow copy of a portion of an array into a new array object 
+selected from start to end (end not included) where start and end represent the index of items 
+in that array. The original array will not be modified.
+
+
+const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+
+console.log(animals.slice(2));
+// expected output: Array ["camel", "duck", "elephant"]
+
+console.log(animals.slice(2, 4));
+// expected output: Array ["camel", "duck"]
+
+console.log(animals.slice(1, 5));
+// expected output: Array ["bison", "camel", "duck", "elephant"]
+
+
+A negative index can be used, indicating an offset from the end of the sequence. 
+slice(-3) extracts the last three elements in the sequence.
+
+console.log(animals.slice(-3));
+// Array ["camel", "duck", "elephant"]
+
+
+splice():
+The splice() method changes the contents of an array by removing or replacing existing elements 
+and/or adding new elements in place
+
+const months = ['Jan', 'March', 'April', 'June'];
+months.splice(1, 0, 'Feb');
+// inserts at index 1
+console.log(months);
+// expected output: Array ["Jan", "Feb", "March", "April", "June"]
+
+months.splice(4, 1, 'May');
+// replaces 1 element at index 4
+console.log(months);
+// expected output: Array ["Jan", "Feb", "March", "April", "May"]
+
+
+
+some():
+The some() method tests whether at least one element in the array passes the test implemented by 
+the provided function. It returns true if, in the array, it finds an element for which the 
+provided function returns true; otherwise it returns false. It doesn't modify the array.
+
+
+const array = [1, 2, 3, 4, 5];
+
+// checks whether an element is even
+const even = (element) => element % 2 === 0;
+
+console.log(array.some(even));
+// expected output: true
+
