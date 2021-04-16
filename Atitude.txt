@@ -1,0 +1,129 @@
+Question 4. A Train 360 M Long Is Running At A Speed Of 45 Km/hr. In What Time Will It Pass A Bridge 140 M Long?
+
+Answer :
+
+Formula for converting from km/hr to m/s: X km/hr = X *( 5/18) m/s.
+
+so Speed = 45 * 5/18 m/sec = 25/2 m/sec.
+
+Total distance to be covered = (360 + 140) m = 500 m.
+
+Required time = 500 * 2/25 sec = 40 sec.
+
+
+
+Question 8. In Covering A Distance Of 30 Km, Abhay Takes 2 Hours More Than Sameer. If Abhay Doubles His Speed, Then He Would Take 1 Hour Less Than Sameer. Abhay's Speed Is?
+
+Answer :
+
+Let Abhay's speed be x km/hr.
+
+So 30/x - 30/2x = 3
+
+=> 6x = 30
+
+x = 5 km/hr.
+
+Question 9. The Sum Of The Present Ages Of A Father And His Son Is 60 Years. Six Years Ago, Father's Age Was Five Times The Age Of The Son. After 6 Years, Son's Age Will Be?
+
+Answer :
+
+Let the present ages of son and father be x and (60 -x) years respectively.
+
+Then, (60 - x) - 6 = 5(x - 6)
+
+=> 54 - x = 5x - 30
+
+=> 6x = 84
+
+=> x = 14.
+
+Son's age after 6 years = (x+ 6) = 20 years.
+
+
+Question 10. Sum Of Three Even Consecutive Numbers Is 48, And Then Least Number Is?
+
+Answer :
+
+Let the numbers be 2n, 2n+2 and 2n+4
+
+2n + (2n+2) + (2n+4) = 48
+
+6n = 48-6 = 42, n = 7
+
+Hence the numbers are -- > 14, 16 and 18
+
+The least number is 14.
+
+
+
+
+Question 11. Walking At 3/4 Of His Usual Speed ,a Man Is Late By 1/2 Hr. The Usual Time Is?
+
+Answer :
+
+Usual speed = S
+
+Usual time = T
+
+Distance = D
+
+New Speed is ¾ S
+
+New time is 4/3 T
+
+4/3 T * T = 5/2
+
+T=15/2 = 7 ½
+
+
+
+
+Question 14. If A's Height Is 40% Less Than That Of B, How Much Percent B's Height Is More Than That Of A?
+
+Answer :
+
+Excess of B's height over A's = [(40/(100 - 40)] x 100%
+
+= 66.66%
+
+
+
+A is able to do a piece of work in 15 days and B can do the same work in 20 days. 
+If they can work together for 4 days, what is the fraction of work left?
+
+Answer : Option A.
+Total work done by A + B in 1 day = 1/15 + 1/(20 ) = 7/60
+Work done in 4 days = 7/60 × 4 = 7/15
+Therefore, fraction of work left = 1 - 7/15 = 8/15
+
+
+
+
+
+Cost price of each of the articles A and B is Rs. 'X'. 
+Article A was sold at a profit of 10% and article B was sold at a profit of 30%. 
+If the overall profit earned after selling both the articles is Rs. 136/-, what is the value of 'X'?
+
+
+Answer : Option A.
+Given : 0.1x + 0.3x = 136 => x = 340
+
+
+Population of a village increased by 5% from 2007 to 2008 and by 25% from 2005 to 2009. 
+If the population of the village was 480 in 2007, what was its population in 2009?
+
+
+Answer : Option C.
+Population in 2007 = 480
+In 2008 = 1.05 × 480 = 504
+In 2009 = 1.25 × 504 = 630
+
+
+
+24% of 150 × 3/4= ?
+
+Answer : Option E.
+24% of 150 × 3/4= x = 36 × 4/3 = 48
+
+

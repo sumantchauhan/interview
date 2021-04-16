@@ -112,3 +112,19 @@ var studObj4 = new Student1();
 // log(studObj4.age); // 15
 
 // log(studObj4.gender); //Male
+
+const numbers = [5, 4, 3, 2, 1];
+
+// log(numbers.map((element) => element * element)); //[ 25, 16, 9, 4, 1 ]
+
+// log(numbers.forEach((element) => element * element)); //undefined
+
+const myAwesomeArray = [1, 2, 3, 4, 5];
+//let total = myAwesomeArray.forEach((x) => x * x).reduce((total, value) => total + value); //TypeError: Cannot read property 'reduce' of undefined
+
+// log(myAwesomeArray);
+
+let total = myAwesomeArray
+  .map((x) => x * x)
+  .reduce((total, value) => total + value); //55
+// log(total);

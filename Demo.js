@@ -53,6 +53,16 @@ const factorial = (number) => {
 
 // factorial(5); //The factorial of 5 is 120.
 
+// Recursion is simply when a function calls itself.
+function factorial1(x) {
+  if (x < 0) return;
+  if (x === 0) return 1;
+  return x * factorial1(x - 1);
+}
+
+let fect = factorial1(5);
+// log("Fectorial", fect);
+
 const allPrime = (min, max) => {
   log(`The prime numbers between ${min} and ${max} are:`);
   for (let i = min; i <= max; i++) {
@@ -373,6 +383,13 @@ const findSmallestMissing = (arr = []) => {
 };
 // log(findSmallestMissing(arr));
 
+const findCommonItems = (array1, array2) => {
+  let res = array1.filter((item) => array2.includes(item));
+  log("Common Items", res);
+};
+
+// findCommonItems(array1, array2); //Common Items [ 1, 2 ]
+
 function getCommonItems(array1, array2) {
   var common = []; // Initialize array to contain common items
 
@@ -388,7 +405,7 @@ function getCommonItems(array1, array2) {
   return common; // Return the common items
 }
 
-var array1 = [1, 4, 5, 6, 8];
+var array1 = [1, 4, 5, 6, 8, 6, 10];
 var array2 = [1, 2, 3, 8, 9];
 
 // Get common items of array1, array2
@@ -486,3 +503,122 @@ const firstMissingPositive = function (nums) {
 let mixedNum = [10, -2, 6, 1, 9, -20, 30, 8, 2, 3, 15, 4, 5];
 let firstMissingPositiveRes = firstMissingPositive(mixedNum);
 log(firstMissingPositiveRes);
+
+const mergedString = (str1, str2) => {
+  let i,
+    l = Math.min(str1.length, str2.length),
+    temp = "";
+  for (i = 0; i < l; i++) {
+    temp += str1[i] + str2[i];
+  }
+  return temp + str1.slice(i) + str2.slice(i);
+};
+
+let mergeRes = mergedString("abcdef", "pqr");
+// log("mergeRes", mergeRes);
+
+const str1 = "grabchjk";
+const str2 = "defyuyr";
+const mergeAlternatively = (str1, str2) => {
+  const a = str1.split("");
+  const b = str2.split("");
+  let mergedString = "";
+  for (var i = 0; i < a.length || i < b.length; i++) {
+    if (i < a.length) {
+      mergedString += a[i];
+    }
+    if (i < b.length) {
+      mergedString += b[i];
+    }
+  }
+  return mergedString;
+};
+// console.log(mergeAlternatively(str1, str2));
+
+var allTypesArray = ["4", "4", "2", "2", "2", "6", "2", "6", "6"];
+var map = allTypesArray.reduce(function (p, c) {
+  p[c] = (p[c] || 0) + 1;
+  return p;
+}, {});
+
+// log(map); //{ '2': 4, '4': 2, '6': 3 }
+
+var newTypesArray = Object.keys(map).sort(function (a, b) {
+  return map[a] - map[b]; //[ '4', '6', '2' ]
+  // return map[b] - map[a]; //[ '2', '6', '4' ]
+});
+
+// console.log(newTypesArray);
+
+const checkReduceMethod = () => {
+  let result = [0, 1, 2, 3, 4].reduce(
+    (accumulator, currentValue, currentIndex, array) => {
+      // log("Reduce", accumulator, currentValue, currentIndex, array);
+      return accumulator + currentValue;
+    }
+  );
+  let result1 = [0, 1, 2, 3, 4].reduce(
+    (accumulator, currentValue, currentIndex, array) => {
+      return accumulator + currentValue;
+    },
+    10
+  );
+  log("Result1", result1); //Result1 20
+  log("Result", result); //Result 10
+  return result;
+};
+
+// checkReduceMethod();
+
+let duplicateArray = [
+  10,
+  15,
+  10,
+  2,
+  20,
+  15,
+  5,
+  10,
+  10,
+  15,
+  15,
+  15,
+  10,
+  5,
+  15,
+  20,
+  5,
+  15,
+  20,
+];
+const countElements = (arr) => {
+  let result = arr.reduce((a, c) => {
+    a[c] = (a[c] || 0) + 1;
+    return a;
+  }, {});
+  log("result", result); //result { '2': 1, '5': 3, '10': 5, '15': 7, '20': 3 }
+  return result;
+};
+
+// countElements(duplicateArray);
+
+const arrays1 = [1, 2, 3, 10, 5, 20, 8];
+const arrays2 = [1, 2, 30, 10, 5, 35];
+
+const findAllMissingNumbers = (arr1, arr2) => {
+  let res = arr1.filter((item) => !arr2.includes(item));
+  // console.log("Res", res);  //Res [ 3, 20, 8 ]
+};
+
+// findAllMissingNumbers(arrays1, arrays2);
+
+const findFirstMissing = (arr1, arr2) => {
+  for (let i = 0; i < arr1.length; i++) {
+    if (!arr2.includes(arr1[i])) {
+      log(arr1[i]);
+      break;
+    }
+  }
+};
+
+findFirstMissing(arrays1, arrays2);

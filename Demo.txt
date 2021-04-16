@@ -1,3 +1,74 @@
+Since JavaScript is a single-threaded programming language with a synchronous execution model that processes one operation after another, 
+it can only process one statement at a time. However, an action like requesting data from an API can take an indeterminate amount of time, 
+depending on the size of data being requested, the speed of the network connection, and other factors. 
+If API calls were performed in a synchronous manner, the browser would not be able to handle any user input, 
+like scrolling or clicking a button, until that operation completes. This is known as blocking.
+
+
+Stack
+The stack, or call stack, holds the state of what function is currently running. 
+If you’re unfamiliar with the concept of a stack, you can imagine it as an array with “Last in, 
+first out” (LIFO) properties, meaning you can only add or remove items from the end of the stack. 
+JavaScript will run the current frame (or function call in a specific environment) in the stack, 
+then remove it and move on to the next one.
+
+
+console.log('Message 1');
+// Print message after 100 millisecond
+setTimeout(function() {
+   console.log('Message 2');
+}, 100);
+console.log('Message 3');
+
+After executing above statements, browser will print “Message 1” & “Message 3” first, 
+then it will print “Message 2”. This is where event loop comes in, which makes sure 
+your asynchronous code runs after all the synchronous code is done executing.
+
+
+Stack: 
+This is where all your javascript code gets pushed and executed one by one as the interpreter reads your program, 
+and gets popped out once the execution is done. If your statement is asynchronous: setTimeout, 
+ajax(), promise, or click event, then that code gets forwarded to Event table, 
+this table is responsible for moving your asynchronous code to callback/event queue after specified time.
+
+Heap: 
+This is where all the memory allocation happens for your variables, that you have defined in your program.
+
+Callback Queue: 
+This is where your asynchronous code gets pushed to, and waits for the execution.
+
+Job Queue: 
+Apart from Callback Queue, browsers have introduced one more queue which is “Job Queue”, 
+reserved only for new Promise() functionality. So when you use promises in your code, 
+you add .then() method, which is a callback method. 
+These `thenable` methods are added to Job Queue once the promise has returned/resolved, 
+and then gets executed.
+
+
+console.log('Message no. 1: Sync');
+setTimeout(function() {
+   console.log('Message no. 2: setTimeout');
+}, 0);
+var promise = new Promise(function(resolve, reject) {
+   resolve();
+});
+promise.then(function(resolve) {
+   console.log('Message no. 3: 1st Promise');
+})
+.then(function(resolve) {
+   console.log('Message no. 4: 2nd Promise');
+});
+console.log('Message no. 5: Sync');
+
+
+// Message no. 1: Sync
+// Message no. 5: Sync
+// Message no. 3: 1st Promise
+// Message no. 4: 2nd Promise
+// Message no. 2: setTimeout
+
+
+
 Closures:
 A closure gives you access to an outer function’s scope from an inner function.
 In JavaScript, closures are created every time a function is created, at function creation time.
@@ -158,9 +229,6 @@ array1.forEach(element => console.log(element));
 // expected output: "a"
 // expected output: "b"
 // expected output: "c"
-
-
-
 
 
 filter():
@@ -367,4 +435,132 @@ const even = (element) => element % 2 === 0;
 
 console.log(array.some(even));
 // expected output: true
+
+
+
+map():
+The map() method gets a function as a parameter. 
+This function is invoked for each Array element and, at the end, the method returns a 
+completely new array filled with the results of the given function call.
+
+const numbers = [5, 4, 3, 2, 1]
+console.log(numbers.map(element => element * element)) //[ 25, 16, 9, 4, 1 ]
+
+This means that it returns a new array that contains an image of each array element. 
+It will always return the same number of items.
+
+
+forEach():
+The forEach() method receives a function as an argument and executes it once for each Array element. 
+However, instead of returning a new array as the map() method, it returns undefined.
+
+
+const numbers = [5, 4, 3, 2, 1]
+console.log(numbers.forEach(element => element * element)) //undefined
+
+
+
+The forEach() method returns undefined, while map() returns a new array with the transformed elements.
+
+Ability to chain other methods:
+The second difference between these array methods is the fact that map() is chainable. 
+This means that you can attach reduce(), sort(), filter() and so on after performing a map() method on an array.
+
+
+That's something you can't do with forEach() because, as you might guess, it returns undefined.
+
+
+const myAwesomeArray = [1, 2, 3, 4, 5]
+myAwesomeArray.forEach(x => x * x).reduce((total, value) => total + value)
+//>>>>>>>>>>>>> Uncaught TypeError: Cannot read property 'reduce' of undefined
+myAwesomeArray.map(x => x * x).reduce((total, value) => total + value)
+//>>>>>>>>>>>>>return value: 55
+
+
+A mutable object is an object whose state can be modified after it is created.
+
+
+
+
+Callbacks
+A callback is a function that is passed to another function. 
+When the first function is done, it will run the second function.
+
+
+function printString(string, callback){
+  setTimeout(
+    () => {
+      console.log(string)
+      callback()
+    }, 
+    Math.floor(Math.random() * 100) + 1
+  )
+}
+
+
+function printAll(){
+  printString("A", () => {
+    printString("B", () => {
+      printString("C", () => {})
+    })
+  })
+}
+printAll();
+
+
+The problem with callbacks is it creates something called “Callback Hell.” 
+Basically, you start nesting functions within functions within functions, and it starts to get really hard to read the code.
+
+
+
+Promises
+Promises try to fix this nesting problem.
+Promise is an object. There are 3 states of the Promise object:
+
+1).Pending: Initial State, before the Promise succeeds or fails.
+2).Resolved: Completed Promise
+3).Rejected: Failed Promise, throw an error
+
+
+function printString(string){
+  return new Promise((resolve, reject) => {
+    setTimeout(
+      () => {
+       console.log(string)
+       resolve()
+      }, 
+     Math.floor(Math.random() * 100) + 1
+    )
+  })
+}
+
+You wrap the whole function in a Promise, and instead of calling the callback, you call resolve (or reject if there is an error). 
+The function returns this Promise object.
+
+
+function printAll(){
+  printString("A")
+  .then(() => {
+    return printString("B")
+  })
+  .then(() => {
+    return printString("C")
+  })
+}
+printAll()
+
+
+This is called a Promise Chain. You can see that the code returns the result of the function (which will be a Promise), 
+and this gets sent to the next function in the chain.
+
+
+Async/Await:
+Await is basically syntactic sugar for Promises. 
+It makes your asynchronous code look more like synchronous/procedural code, which is easier for humans to understand.
+
+async function printMyAsync(){
+  await printString("one")
+  await printString("two")
+  await printString("three")
+}
 
